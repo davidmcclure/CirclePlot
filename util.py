@@ -1,7 +1,7 @@
 import math
 
 
-def circle(count):
+def generate_circle(count):
 
     '''Generate the coordinate positions for a circle
     comprised of <count> points on a cartesian grid.
