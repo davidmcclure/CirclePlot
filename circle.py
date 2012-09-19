@@ -16,12 +16,17 @@ class Circle:
         self.texts = []
         self.plots = []
 
-        # Randomize word order.
-        self.words = words
+        # Copy words, randomize.
+        self.words = list(words)
         random.shuffle(self.words)
 
         # Generate circle.
         self.points = util.generate_circle(len(words))
+
+        # Build word-point dict.
+        self.word_to_point = {}
+        for i,word in enumerate(self.words):
+            self.word_to_point[word] = self.points[i]
 
 
     def register_text(self, text):
@@ -47,8 +52,8 @@ class Circle:
         points = []
 
         # Plot the words.
-        for i,word in enumerate(words):
-            points.append(self.points[i])
+        for word in words:
+            points.append(self.word_to_point[word])
 
         # Compute centroid.
         return util.mean_center(points)
@@ -63,8 +68,9 @@ class Circle:
         :return void.'''
 
         # Walk texts.
-        for i,text in enumerate(texts):
+        for i,text in enumerate(self.texts):
 
             # Zipper the segments.
             for segment in text.zipper(length):
-                self.plots.append(self.plot_segment(segment))
+                point = self.plot_segment(segment)
+                self.plots[i].append(point)

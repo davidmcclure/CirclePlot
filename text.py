@@ -13,7 +13,6 @@ class Text:
         :return void.'''
 
         self.text = text
-        self.tokens = []
         self.tokenize()
 
 
@@ -24,6 +23,7 @@ class Text:
         :return void.'''
 
         self.tokens = nltk.word_tokenize(self.text)
+        self.vocab = set(self.tokens)
 
 
     def zipper(self, length):
