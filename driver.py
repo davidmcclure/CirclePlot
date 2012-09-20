@@ -12,7 +12,7 @@ def load(url, width, html=False):
 
 def plot(text, width):
     t = Text(text)
-    c = Circle(t.vocab)
+    c = Circle()
     c.register_text(t)
     c.plot_texts(width)
     xs = [x for x,y in c.plots[0]]
@@ -26,7 +26,7 @@ def comp(url1, url2, width):
     res2 = req.get(url2)
     t1 = Text(res1.text)
     t2 = Text(res2.text)
-    c = Circle(set.union(t1.vocab, t2.vocab))
+    c = Circle()
     c.plot_texts(width)
     xs = [x for x,y in c.plots[0]]
     ys = [y for x,y in c.plots[0]]

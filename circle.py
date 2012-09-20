@@ -6,9 +6,9 @@ import random
 class Circle:
 
 
-    def __init__(self, words):
+    def __init__(self):
 
-        '''Set words, generate positions.
+        '''Shells for texts and plots.
 
         :param list words: A dictionary of words.
 
@@ -17,15 +17,25 @@ class Circle:
         self.texts = []
         self.plots = []
 
-        # Copy words.
-        self.words = list(words)
+
+    def build_circle(self):
+
+        '''Generate the unique vocabulary, build circle.
+
+        :param list words: A dictionary of words.
+
+        :return void.'''
+
+        # Get unique vocabulary.
+        vocabs = [text.vocab for text in self.texts]
+        uniques = set.intersection(*vocabs)
 
         # Generate circle.
-        self.points = util.generate_circle(len(words))
+        self.points = util.generate_circle(len(uniques))
 
         # Build word-point dict.
         self.word_to_point = {}
-        for i,word in enumerate(self.words):
+        for i,word in enumerate(uniques):
             self.word_to_point[word] = self.points[i]
 
 
@@ -66,6 +76,8 @@ class Circle:
         :param in length: The segment length.
 
         :return void.'''
+
+        self.build_circle()
 
         avgx = None
         avgy = None
