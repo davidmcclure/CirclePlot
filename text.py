@@ -28,11 +28,11 @@ class Text:
 
     def zipper(self, length):
 
-        '''Yield all segments of length <length> in order.
+        '''Yield heads and tails of segments.
 
         :param int length: The segment length.
 
-        :yield tuple: The segments.'''
+        :yield tuple: The head and tail.'''
 
-        for i in range(len(self.tokens) - length+1):
-            yield (self.tokens[i:i+length])
+        for i in range(1, len(self.tokens) - length):
+            yield (self.tokens[i], self.tokens[i+length])
