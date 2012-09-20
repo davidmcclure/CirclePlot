@@ -28,7 +28,7 @@ class Circle:
 
         # Get unique vocabulary.
         vocabs = [text.vocab for text in self.texts]
-        uniques = set.intersection(*vocabs)
+        uniques = set.union(*vocabs)
 
         # Generate circle.
         self.points = util.generate_circle(len(uniques))
