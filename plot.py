@@ -2,6 +2,7 @@ from text import *
 from circle import *
 import matplotlib.pyplot as plt
 import requests as req
+import util
 import os
 
 
@@ -15,7 +16,7 @@ class Plot:
         :return void.'''
 
         self.circle = Circle()
-        self.legend = []
+        self.labels = []
 
 
     def paste_stream(self, stream):
@@ -39,7 +40,7 @@ class Plot:
 
         res = req.get(url)
         self.circle.register_text(Text(res.text))
-        self.legend.append(url)
+        self.labels.append(url)
 
 
     def load_file(self, path):
@@ -52,7 +53,7 @@ class Plot:
 
         f = open(path, 'r')
         self.circle.register_text(Text(f.read()))
-        self.legend.append(path)
+        self.labels.append(path)
 
 
     def load_directory(self, path):
@@ -76,7 +77,7 @@ class Plot:
 
         :return list plots: The list of [xs, ys].'''
 
-        plots = []
+        self.plots = []
 
         # Compute plot lines.
         self.circle.plot_texts(width)
@@ -85,6 +86,34 @@ class Plot:
         for plot in self.circle.plots:
             xs = [x for x,y in plot]
             ys = [y for x,y in plot]
-            plots.append((xs, ys))
+            self.plots.append((xs, ys))
 
-        return plots
+
+    def render(self, labels=True, ticks=True, parts=10):
+
+        '''Render plot lines.
+
+        :param bool labels: Render plot labels if true.
+        :param bool ticks: Render percentage ticks if true.
+        :param int parts: The number of tick partitions.
+
+        :return void.'''
+
+        # Clear.
+        plt.clf()
+
+        for i,p in enumerate(self.plots):
+
+            # Render.
+            plt.plot(*p)
+
+            # Label.
+            if labels:
+                x = p[0][0]
+                y = p[1][0]
+                plt.annotate(self.labels[i], (x,y))
+
+            # Ticks
+            if ticks:
+                for l,i in util.plot_labels(len(p[0]), parts):
+                    plt.annotate(l, (p[0][i], p[1][i]))

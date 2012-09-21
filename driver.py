@@ -14,71 +14,64 @@ def render(plots, labels=None, partitions=10):
             plt.annotate(l, (p[0][index], p[1][index]))
 
 
-def paste(stream, width):
+def paste_stream(stream, width):
     p = Plot()
     p.paste_stream(stream)
-    render(p.plot(width))
+    p.plot(width)
+    p.render()
 
 
-def load(url, width):
+def load_url(url, width):
     p = Plot()
     p.load_url(url)
-    render(p.plot(width), p.legend)
+    p.plot(width)
+    p.render()
+
+
+def load_file(path, width):
+    p = Plot()
+    p.load_file(path)
+    p.plot(width)
+    p.render()
+
+
+def load_dir(path, width):
+    p = Plot()
+    p.load_directory(path)
+    p.plot(width)
+    p.render()
 
 
 # Experiments:
 
 
 def shakespeare(width=20000):
-    p = Plot()
-    p.load_directory('texts/shakespeare')
-    render(p.plot(width), p.legend)
+    load_dir('texts/shakespeare', width)
 
 
-def tempest(width=9000):
-    p = Plot()
-    p.load_file('texts/shakespeare/tempest.txt')
-    render(p.plot(width), p.legend)
+def tempest(width=6000):
+    load_file('texts/shakespeare/tempest.txt', width)
 
 
 def hamlet(width=9000):
-    p = Plot()
-    p.load_file('texts/shakespeare/hamlet.txt')
-    render(p.plot(width), p.legend)
+    load_file('texts/shakespeare/hamlet.txt', width)
 
 
 def macbeth(width=5000):
-    p = Plot()
-    p.load_file('texts/shakespeare/macbeth.txt')
-    render(p.plot(width), p.legend)
+    load_file('texts/shakespeare/macbeth.txt', width)
 
 
 def winters_tale(width=8000):
-    p = Plot()
-    p.load_file('texts/shakespeare/winters_tale.txt')
-    render(p.plot(width), p.legend)
+    load_file('texts/shakespeare/winters_tale.txt', width)
 
 
 def othello(width=8000):
-    p = Plot()
-    p.load_file('texts/shakespeare/othello.txt')
-    render(p.plot(width), p.legend)
+    load_file('texts/shakespeare/othello.txt', width)
 
 
 def shakespeare_vs_yeats(width=20000):
     p = Plot()
     p.load_directory('texts/shakespeare')
     p.load_file('texts/poets/yeats.txt')
-    render(p.plot(width), p.legend)
-
-
-def antony_and_cleopatra(width=5000):
-    p = Plot()
-    p.load_file('texts/shakespeare/antony_and_cleopatra.txt')
-    render(p.plot(width), p.legend)
-
-
-def aesop(width=30000):
-    p = Plot()
-    p.load_url('http://www.gutenberg.lib.md.us/1/1/3/3/11339/11339.txt')
-    render(p.plot(width), p.legend, True)
+    p.plot(width)
+    p.render()
