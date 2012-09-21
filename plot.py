@@ -15,6 +15,7 @@ class Plot:
         :return void.'''
 
         self.circle = Circle()
+        self.legend = []
 
 
     def paste_stream(self, stream):
@@ -37,7 +38,8 @@ class Plot:
         :return void.'''
 
         res = req.get(url)
-        self.circle.register_text(res.text)
+        self.circle.register_text(Text(res.text))
+        self.legend.append(url)
 
 
     def load_file(self, path):
@@ -48,9 +50,9 @@ class Plot:
 
         :return void.'''
 
-        print path
         f = open(path, 'r')
-        self.circle.register_text(f.read())
+        self.circle.register_text(Text(f.read()))
+        self.legend.append(path)
 
 
     def load_directory(self, path):
@@ -61,24 +63,28 @@ class Plot:
 
         :return void.'''
 
+        # Register texts.
         for filepath in os.listdir(path):
             self.load_file(path+'/'+filepath)
 
 
     def plot(self, width):
 
-        '''Plot the circle.
+        '''Generate plot lines.
 
         :param int width: The segment length.
 
-        :return void.'''
+        :return list plots: The list of [xs, ys].'''
+
+        plots = []
 
         # Compute plot lines.
         self.circle.plot_texts(width)
-        plt.clf()
 
         # Graph the texts.
         for plot in self.circle.plots:
             xs = [x for x,y in plot]
             ys = [y for x,y in plot]
-            plt.plot(xs, ys)
+            plots.append((xs, ys))
+
+        return plots

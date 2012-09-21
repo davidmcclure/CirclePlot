@@ -39,6 +39,24 @@ def mean_center(points):
     return (avg(xs), avg(ys))
 
 
+def plot_labels(text_length, partitions):
+
+    '''Generate a list of partitions on a token list with
+    format [(X%, offset), ...].
+
+    :param int text_length: The number of tokens.
+    :param int partitions: The number of partitions.
+
+    :return list partitions: The partitions.'''
+
+    partitions = []
+
+    for i in range(1, partitions):
+        index = int(0.1 * i * length)
+        label = str(i) + '0'
+        partitions.append((label, index))
+
+
 def avg(numbers):
 
     '''Average a list.
