@@ -39,22 +39,21 @@ def mean_center(points):
     return (avg(xs), avg(ys))
 
 
-def plot_labels(length, parts):
+def compute_markers(length, ticks):
 
-    '''Generate a list of partitions on a token list with
-    format [(X%, offset), ...].
+    '''Generate a list of offset markers on a token list
+    with format [(X%, offset), ...].
 
     :param int length: The number of tokens.
-    :param int parts: The number of partitions.
+    :param int ticks: The number of partitions.
 
     :return list partitions: The partitions.'''
 
     partitions = []
 
-    for i in range(1, parts):
-        index = int(0.1 * i * length)
-        label = str(i) + '0'
-        partitions.append((label, index))
+    for i in range(1, ticks):
+        index = int((1/float(ticks)) * i * length)
+        partitions.append((str(i), index))
 
     return partitions
 

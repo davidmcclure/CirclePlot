@@ -89,7 +89,7 @@ class Plot:
             self.plots.append((xs, ys))
 
 
-    def render(self, labels=True, ticks=True, parts=10):
+    def render(self, labels=True, markers=True, ticks=100):
 
         '''Render plot lines.
 
@@ -114,6 +114,6 @@ class Plot:
                 plt.annotate(self.labels[i], (x,y))
 
             # Ticks
-            if ticks:
-                for l,i in util.plot_labels(len(p[0]), parts):
-                    plt.annotate(l, (p[0][i], p[1][i]))
+            if markers:
+                for l,i in util.compute_markers(len(p[0]), ticks):
+                    plt.annotate(l, (p[0][i], p[1][i]), color='red')
