@@ -1,8 +1,6 @@
 from text import *
 from circle import *
-import requests as req
 import matplotlib.pyplot as plt
-import re
 
 
 def load(url, width, html=False):
