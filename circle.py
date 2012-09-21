@@ -69,11 +69,11 @@ class Circle:
         return util.mean_center(points)
 
 
-    def plot_texts(self, length):
+    def plot_texts(self, width):
 
         '''Generate aggregate plots for texts.
 
-        :param in length: The segment length.
+        :param int width: The segment length.
 
         :return void.'''
 
@@ -86,7 +86,7 @@ class Circle:
         for i,text in enumerate(self.texts):
 
             # Plot the first segment.
-            seed = self.plot_segment(text.tokens[:length])
+            seed = self.plot_segment(text.tokens[:width])
             self.plots[i].append(seed)
 
             # Set averages.
@@ -94,13 +94,13 @@ class Circle:
             avgy = seed[1]
 
             # Zipper the text.
-            for h,t in text.zipper(length):
+            for h,t in text.zipper(width):
 
                 # Get head and tail points.
                 head = self.word_to_point[h]
                 tail = self.word_to_point[t]
 
                 # Update averages, push point.
-                avgx = ((avgx*length)-head[0]+tail[0])/length
-                avgy = ((avgy*length)-head[1]+tail[1])/length
+                avgx = ((avgx*width)-head[0]+tail[0])/width
+                avgy = ((avgy*width)-head[1]+tail[1])/width
                 self.plots[i].append((avgx, avgy))

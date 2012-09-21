@@ -1,11 +1,14 @@
+from text import *
+from circle import *
 import matplotlib.pyplot as plt
 import requests as req
+import os
 
 
 class Plot:
 
 
-    def __init__(self, text):
+    def __init__(self):
 
         '''Create circle.
 
@@ -45,6 +48,37 @@ class Plot:
 
         :return void.'''
 
-        f = open(path, 'w')
-        print f
-        self.circle.register_text(res.text)
+        print path
+        f = open(path, 'r')
+        self.circle.register_text(f.read())
+
+
+    def load_directory(self, path):
+
+        '''Register texts from a directory.
+
+        :param string path: The directory path.
+
+        :return void.'''
+
+        for filepath in os.listdir(path):
+            self.load_file(path+'/'+filepath)
+
+
+    def plot(self, width):
+
+        '''Plot the circle.
+
+        :param int width: The segment length.
+
+        :return void.'''
+
+        # Compute plot lines.
+        self.circle.plot_texts(width)
+        plt.clf()
+
+        # Graph the texts.
+        for plot in self.circle.plots:
+            xs = [x for x,y in plot]
+            ys = [y for x,y in plot]
+            plt.plot(xs, ys)
