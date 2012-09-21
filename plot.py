@@ -115,5 +115,7 @@ class Plot:
 
             # Ticks
             if markers:
-                for l,i in util.compute_markers(len(p[0]), ticks):
-                    plt.annotate(l, (p[0][i], p[1][i]), color='red')
+                for l,i in util.markers(len(p[0]), ticks):
+                    x = p[0][i]
+                    y = p[1][i]
+                    plt.annotate(l, (x,y), color='red', size=14)

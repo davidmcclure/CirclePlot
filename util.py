@@ -39,7 +39,7 @@ def mean_center(points):
     return (avg(xs), avg(ys))
 
 
-def compute_markers(length, ticks):
+def markers(length, ticks):
 
     '''Generate a list of offset markers on a token list
     with format [(X%, offset), ...].
