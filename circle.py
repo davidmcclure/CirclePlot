@@ -1,6 +1,7 @@
+from text import *
 import util
-import datetime as dt
 import random
+import os
 
 
 class Circle:
@@ -15,7 +16,54 @@ class Circle:
         :return void.'''
 
         self.texts = []
-        self.plots = []
+
+
+    def paste_stream(self, stream):
+
+        '''Register text from direct stream.
+
+        :param string stream: The text stream.
+
+        :return void.'''
+
+        self.texts.append(Text(stream))
+
+
+    def load_url(self, url):
+
+        '''Register a text from a URL.
+
+        :param string url: The url.
+
+        :return void.'''
+
+        res = req.get(url)
+        self.texts.append(Text(res.text))
+
+
+    def load_file(self, path):
+
+        '''Register a text from a file.
+
+        :param string path: The filepath.
+
+        :return void.'''
+
+        f = open(path, 'r')
+        self.texts.append(Text(f.read()))
+
+
+    def load_directory(self, path):
+
+        '''Register texts from a directory.
+
+        :param string path: The directory path.
+
+        :return void.'''
+
+        # Register texts.
+        for filepath in os.listdir(path):
+            self.load_file(path+'/'+filepath)
 
 
     def build_circle(self):
@@ -29,9 +77,11 @@ class Circle:
         # Generate vocabulary from texts.
         vocabs = [text.vocab for text in self.texts]
         self.vocab = list(set.union(*vocabs))
+
+        # Randomize starting positions.
         random.shuffle(self.vocab)
 
-        # Generate circle.
+        # Generate circle points.
         self.points = util.generate_circle(len(self.vocab))
 
         # Build word-point dict.
@@ -40,81 +90,34 @@ class Circle:
             self.word_to_point[word] = self.points[i]
 
 
-    def register_text(self, text):
+    def build_corpus(self):
 
-        '''Register a text.
-
-        :param Text text: The text instance.
+        '''Generate aggregate corpus from texts.
 
         :return void.'''
 
-        self.texts.append(text)
-        self.plots.append([])
+        self.corpus = []
+        for text in self.texts: self.corpus += text.tokens
 
 
-    def plot_segment(self, words):
+    def model(self, iterations=10):
 
-        '''Plot words and calculate centroid.
-
-        :param list words: The words.
-
-        :return tuple centroid: The centroid.'''
-
-        points = []
-
-        # Plot the words.
-        for word in words:
-            points.append(self.word_to_point[word])
-
-        # Compute centroid.
-        return util.mean_center(points)
-
-
-    def plot_segment2(self, words):
-
-        points = []
-
-        # Plot the words.
-        for word in words:
-            points.append(self.word_to_point[word])
-
-        print points
-
-        return util.sum(points)
-
-
-    def plot_texts(self, width):
-
-        '''Generate aggregate plots for texts.
-
-        :param int width: The segment length.
+        '''Construct the semantic circle.
 
         :return void.'''
 
         self.build_circle()
+        self.build_corpus()
+        self.links = {}
 
-        avgx = None
-        avgy = None
+        for word in self.vocab: self.links[word] = []
 
-        # Walk texts.
-        for i,text in enumerate(self.texts):
+        # Set head and tail links.
+        self.links[self.corpus[0]].append(self.corpus[1])
+        self.links[self.corpus[-1]].append(self.corpus[-2])
 
-            # Plot the first segment.
-            seed = self.plot_segment(text.tokens[:width])
-            self.plots[i].append(seed)
-
-            # Set averages.
-            avgx = seed[0]
-            avgy = seed[1]
-
-            # Zipper the text.
-            for h,t in text.zipper(width):
-
-                # Get head and tail points.
-                head = self.word_to_point[h]
-                tail = self.word_to_point[t]
-
-                # Update averages, push point.
-                avgx = ((avgx*width)-head[0]+tail[0])/width
-                avgy = ((avgy*width)-head[1]+tail[1])/width
-                self.plots[i].append((avgx, avgy))
+        # Register links.
+        for i in range(1, len(self.corpus)-3):
+            triad = self.corpus[i:i+3]
+            self.links[triad[1]].append(triad[0])
+            self.links[triad[1]].append(triad[2])
