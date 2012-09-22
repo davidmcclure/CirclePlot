@@ -16,6 +16,7 @@ class Circle:
 
         self.texts = []
         self.plots = []
+        self.vocab = None
 
 
     def build_circle(self):
@@ -26,16 +27,16 @@ class Circle:
 
         :return void.'''
 
-        # Get unique vocabulary.
+        # Generate vocabulary from texts.
         vocabs = [text.vocab for text in self.texts]
-        uniques = set.union(*vocabs)
+        self.vocab = set.union(*vocabs)
 
         # Generate circle.
-        self.points = util.generate_circle(len(uniques))
+        self.points = util.generate_circle(len(self.vocab))
 
         # Build word-point dict.
         self.word_to_point = {}
-        for i,word in enumerate(uniques):
+        for i,word in enumerate(self.vocab):
             self.word_to_point[word] = self.points[i]
 
 

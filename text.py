@@ -23,7 +23,6 @@ class Text:
 
         :return void.'''
 
-        # Tokenize, scrub stopwords.
         self.tokens = nltk.word_tokenize(self.text)
         self.vocab = set(self.tokens)
 

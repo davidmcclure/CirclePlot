@@ -89,7 +89,7 @@ class Plot:
             self.plots.append((xs, ys))
 
 
-    def render(self, labels=True, markers=True, ticks=100):
+    def render(self, labels=True, markers=False, ticks=100):
 
         '''Render plot lines.
 
