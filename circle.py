@@ -16,7 +16,6 @@ class Circle:
 
         self.texts = []
         self.plots = []
-        self.vocab = None
 
 
     def build_circle(self):
@@ -29,7 +28,8 @@ class Circle:
 
         # Generate vocabulary from texts.
         vocabs = [text.vocab for text in self.texts]
-        self.vocab = set.union(*vocabs)
+        self.vocab = list(set.union(*vocabs))
+        random.shuffle(self.vocab)
 
         # Generate circle.
         self.points = util.generate_circle(len(self.vocab))
@@ -68,6 +68,19 @@ class Circle:
 
         # Compute centroid.
         return util.mean_center(points)
+
+
+    def plot_segment2(self, words):
+
+        points = []
+
+        # Plot the words.
+        for word in words:
+            points.append(self.word_to_point[word])
+
+        print points
+
+        return util.sum(points)
 
 
     def plot_texts(self, width):

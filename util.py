@@ -19,8 +19,10 @@ def generate_circle(count):
     # Walk the word count.
     for i in range(count):
         angle = (interval * i) * (math.pi / 180)
-        x = radius * math.cos(angle)
-        y = radius * math.sin(angle)
+        # x = radius * math.cos(angle)
+        # y = radius * math.sin(angle)
+        x = math.cos(angle)
+        y = math.sin(angle)
         points.append((x, y))
 
     return points
@@ -37,6 +39,19 @@ def mean_center(points):
     xs = [x for x,y in points]
     ys = [y for x,y in points]
     return (avg(xs), avg(ys))
+
+
+def sum(points):
+
+    '''Compute the sum of a set of vectors.
+
+    :param list vectors: A list of x/y tuples.
+
+    :return tuple sum: The sum.'''
+
+    xs = [x for x,y in points]
+    ys = [y for x,y in points]
+    return (sum(xs), sum(ys))
 
 
 def markers(length, ticks):
