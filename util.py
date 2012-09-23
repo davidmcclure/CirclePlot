@@ -39,6 +39,20 @@ def mean_center(points):
     return (avg(xs), avg(ys))
 
 
+def vector_sum(points):
+
+    '''Compute sum of a collection of vectors originating
+    at (0,0, defined as a list of terminal points.
+
+    :param list points: A list of x/y tuples.
+
+    :return tuple sum: The sum point.'''
+
+    xs = [x for x,y in points]
+    ys = [y for x,y in points]
+    return (sum(xs), sum(ys))
+
+
 def markers(length, ticks):
 
     '''Generate a list of offset markers on a token list
@@ -67,3 +81,17 @@ def avg(numbers):
     :return float: The average.'''
 
     return float(sum(numbers)) / len(numbers)
+
+
+def hypotenuse(origin, target):
+
+    '''Compute linear distance between points.
+
+    :param tuple origin: The origin.
+    :param tuple target: The target.
+
+    :return float: The hypotenuse.'''
+
+    dx = origin[0]-target[0]
+    dy = origin[1]-target[1]
+    return math.sqrt(math.pow(dx,2) + math.pow(dy,2))

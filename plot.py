@@ -80,6 +80,7 @@ class Plot:
         self.plots = []
 
         # Compute plot lines.
+        self.circle.model_circle()
         self.circle.plot_texts(width)
 
         # Graph the texts.
@@ -89,7 +90,7 @@ class Plot:
             self.plots.append((xs, ys))
 
 
-    def render(self, labels=False, markers=True, ticks=100):
+    def render(self, labels=True, markers=True, ticks=100):
 
         '''Render plot lines.
 
