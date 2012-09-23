@@ -25,3 +25,17 @@ def generate_circle(count):
         points.append((x, y))
 
     return points
+
+
+def hypotenuse(origin, target):
+
+    '''Compute linear distance between points.
+
+    :param tuple origin: The origin.
+    :param tuple target: The target.
+
+    :return float: The hypotenuse.'''
+
+    dx = origin[0]-target[0]
+    dy = origin[1]-target[1]
+    return math.sqrt(math.pow(dx, 2) + math.pow(dy, 2))
