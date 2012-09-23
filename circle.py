@@ -1,5 +1,6 @@
 from text import *
 import matplotlib.pyplot as plt
+import requests as req
 import util
 import random
 import os
@@ -101,7 +102,7 @@ class Circle:
         for text in self.texts: self.corpus += text.tokens
 
 
-    def model_circle(self):
+    def model(self):
 
         '''Construct the semantic circle.
 
