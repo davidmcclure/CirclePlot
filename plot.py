@@ -89,7 +89,7 @@ class Plot:
             self.plots.append((xs, ys))
 
 
-    def render(self, labels=False, markers=False, ticks=100):
+    def render(self, labels=False, markers=True, ticks=100):
 
         '''Render plot lines.
 
@@ -103,9 +103,9 @@ class Plot:
         plt.clf()
 
         # Render circle.
-        xs = [x for x,y in self.circle.points]
-        ys = [y for x,y in self.circle.points]
-        plt.plot(xs, ys)
+        # xs = [x for x,y in self.circle.points]
+        # ys = [y for x,y in self.circle.points]
+        # plt.plot(xs, ys)
 
         for i,p in enumerate(self.plots):
 
